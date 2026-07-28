@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
 import { loginUser } from "../services/authService";
 import { getAuthErrorMessage } from "../utils/authErrors";
 import { FirebaseError } from "firebase/app";
@@ -8,6 +9,7 @@ export function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -16,6 +18,7 @@ export function Login() {
 
     try {
       await loginUser(email, password);
+      navigate("/");
     } catch (err) {
       if (err instanceof FirebaseError) {
         setError(getAuthErrorMessage(err.code));
@@ -26,6 +29,7 @@ export function Login() {
       setLoading(false);
     }
   }
+
 
   return (
     <form onSubmit={handleSubmit}>

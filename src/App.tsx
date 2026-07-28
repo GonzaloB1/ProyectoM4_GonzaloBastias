@@ -1,16 +1,40 @@
-import { LogoutButton } from "./components/LogoutButton";
-import { useAuth } from "./features/auth/useAuth";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Login } from "./pages/Login";
+import { Register } from "./pages/Register";
+import { Tasks } from "./pages/Tasks";
+import { ProtectedRoute } from "./routes/ProtectedRoute";
+import { PublicOnlyRoute } from "./routes/PublicOnlyRoute";
 
 function App() {
-  const { user, loading } = useAuth();
-
-  if (loading) return <p>Cargando...</p>;
-
   return (
-    <div>
-      <p>{user ? `Sesión activa: ${user.email}` : "No hay sesión activa"}</p>
-      <LogoutButton />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/login"
+          element={
+            <PublicOnlyRoute>
+              <Login />
+            </PublicOnlyRoute>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <PublicOnlyRoute>
+              <Register />
+            </PublicOnlyRoute>
+          }
+        />
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <Tasks />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
