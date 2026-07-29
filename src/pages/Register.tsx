@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { registerUser } from "../services/authService";
 import { getAuthErrorMessage } from "../utils/authErrors";
 import { FirebaseError } from "firebase/app";
@@ -8,6 +9,7 @@ export function Register() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -21,6 +23,7 @@ export function Register() {
     setLoading(true);
     try {
       await registerUser(email, password);
+      navigate("/");
     } catch (err) {
       if (err instanceof FirebaseError) {
         setError(getAuthErrorMessage(err.code));
@@ -57,6 +60,10 @@ export function Register() {
       <button type="submit" disabled={loading}>
         {loading ? "Registrando..." : "Registrarse"}
       </button>
+
+      <p>
+        ¿Ya tenés cuenta? <Link to="/login">Iniciar sesión</Link>
+      </p>
     </form>
   );
 }

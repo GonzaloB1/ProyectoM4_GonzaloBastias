@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { loginUser } from "../services/authService";
 import { getAuthErrorMessage } from "../utils/authErrors";
 import { FirebaseError } from "firebase/app";
@@ -30,7 +30,6 @@ export function Login() {
     }
   }
 
-
   return (
     <form onSubmit={handleSubmit}>
       <h1>Iniciar sesión</h1>
@@ -56,6 +55,10 @@ export function Login() {
       <button type="submit" disabled={loading}>
         {loading ? "Ingresando..." : "Iniciar sesión"}
       </button>
+
+      <p>
+        ¿No tenés cuenta? <Link to="/register">Registrate</Link>
+      </p>
     </form>
   );
-} 
+}
