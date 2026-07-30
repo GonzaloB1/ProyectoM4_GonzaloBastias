@@ -5,6 +5,7 @@ import { useAuth } from "../features/auth/useAuth";
 export function TaskForm() {
   const { user } = useAuth();
   const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e: FormEvent) {
@@ -13,8 +14,13 @@ export function TaskForm() {
 
     setLoading(true);
     try {
-      await createTask({ title: title.trim(), userId: user.uid });
+      await createTask({
+        title: title.trim(),
+        description: description.trim(),
+        userId: user.uid,
+      });
       setTitle("");
+      setDescription("");
     } catch (err) {
       console.error("Error al crear tarea:", err);
     } finally {
@@ -23,12 +29,18 @@ export function TaskForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="task-form" onSubmit={handleSubmit}>
       <input
         type="text"
         placeholder="Nueva tarea"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
+      />
+      <textarea
+        placeholder="Descripción (opcional)"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        rows={3}
       />
       <button className="btn-primary" type="submit" disabled={loading || !title.trim()}>
       Agregar

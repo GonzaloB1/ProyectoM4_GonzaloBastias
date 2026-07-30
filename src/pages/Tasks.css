@@ -52,6 +52,12 @@
   gap: 0.75rem;
 }
 
+.task-form textarea,
+.task-item-editing textarea {
+  resize: vertical;
+  font-family: inherit;
+}
+
 .btn-primary {
   background-color: var(--color-accent);
   color: #04222c;
@@ -100,15 +106,32 @@
   cursor: pointer;
 }
 
-.task-item span {
+.task-item-content {
   flex: 1;
+  min-width: 0;
+}
+
+.task-title {
   word-break: break-word;
   font-size: 0.92rem;
 }
 
-.task-item.completed span {
+.task-description {
+  word-break: break-word;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin-top: 0.2rem;
+}
+
+.task-item.completed .task-title {
   color: var(--color-text-muted);
   text-decoration: line-through;
+}
+
+.task-item-actions {
+  display: flex;
+  gap: 0.4rem;
+  flex-shrink: 0;
 }
 
 .task-item .btn-delete {
@@ -121,6 +144,17 @@
 
 .task-item .btn-delete:hover {
   color: var(--color-error);
+}
+
+.task-item-editing {
+  align-items: stretch;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.task-item-editing input[type="text"],
+.task-item-editing textarea {
+  width: 100%;
 }
 
 .empty-state {

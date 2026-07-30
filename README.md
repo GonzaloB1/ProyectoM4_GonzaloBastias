@@ -29,6 +29,9 @@ src/
 
 api/
 └─ send-summary.ts   # Función serverless: envía el resumen por email vía AWS SES
+
+firestore.rules        # Reglas de seguridad de Firestore (versionadas)
+firebase.json           # Config del Firebase CLI para desplegar las reglas
 ```
 
 ## Decisiones de arquitectura
@@ -89,12 +92,13 @@ En Vercel, estas variables se configuran en Project Settings → Environment Var
 npm run test
 ```
 
-Se testeó `getAuthErrorMessage` (lógica pura de traducción de errores) y el componente `Login` (con mocks de `authService`, cubriendo tanto el caso de éxito como el caso de credenciales incorrectas).
+Se testeó `getAuthErrorMessage` (lógica pura de traducción de errores), el componente `Login` (con mocks de `authService`, cubriendo tanto el caso de éxito como el caso de credenciales incorrectas) y los componentes principales de tareas `TaskForm` y `TaskList` (con mocks de `taskService` y `useAuth`, cubriendo creación, edición, completado y borrado de tareas).
 
 ## Seguridad
 
 - `.env` está en `.gitignore`; `.env.example` documenta las claves sin valores reales.
-- Las reglas de Firestore restringen cada documento de tarea a su `userId`: un usuario autenticado no puede leer ni escribir tareas de otro, verificado explícitamente con dos usuarios de prueba.
+- Las reglas de Firestore (`firestore.rules`, versionadas en el repo) restringen cada documento de tarea a su `userId`: un usuario autenticado no puede leer ni escribir tareas de otro, ni siquiera manipulando el cliente. Se despliegan con `firebase deploy --only firestore:rules`.
+- Además de las reglas del servidor, el cliente filtra explícitamente por `where("userId", "==", user.uid)` en cada consulta.
 - Las rutas de tareas están protegidas con `ProtectedRoute`, que espera a que se resuelva el estado de auth antes de decidir si redirige, evitando redirecciones prematuras.
 - Las credenciales de AWS SES nunca llegan al bundle del cliente — solo existen dentro de `api/send-summary.ts`, que corre en el servidor.
 

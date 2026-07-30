@@ -26,8 +26,8 @@ describe("Login", () => {
 
     renderLogin();
 
-    await user.type(screen.getByPlaceholderText("Email"), "test@test.com");
-    await user.type(screen.getByPlaceholderText("Contraseña"), "clave123");
+    await user.type(screen.getByLabelText("Email"), "test@test.com");
+    await user.type(screen.getByLabelText("Contraseña"), "clave123");
     await user.click(screen.getByRole("button", { name: /iniciar sesión/i }));
 
     await waitFor(() => {
@@ -42,8 +42,8 @@ describe("Login", () => {
 
     renderLogin();
 
-    await user.type(screen.getByPlaceholderText("Email"), "test@test.com");
-    await user.type(screen.getByPlaceholderText("Contraseña"), "clave123");
+    await user.type(screen.getByLabelText("Email"), "test@test.com");
+    await user.type(screen.getByLabelText("Contraseña"), "clave123");
     await user.click(screen.getByRole("button", { name: /iniciar sesión/i }));
 
     await waitFor(() => {

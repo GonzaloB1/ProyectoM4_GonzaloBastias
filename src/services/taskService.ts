@@ -12,7 +12,7 @@ import {
   type Unsubscribe,
 } from "firebase/firestore";
 import { db } from "./firebase";
-import type { Task, NewTask } from "../types/task";
+import type { Task, NewTask, UpdateTaskInput } from "../types/task";
 
 const tasksCollection = collection(db, "tasks");
 
@@ -41,6 +41,14 @@ export async function createTask(newTask: NewTask) {
     ...newTask,
     completed: false,
     createdAt: serverTimestamp(),
+  });
+}
+
+export async function updateTask(taskId: string, data: UpdateTaskInput) {
+  const taskRef = doc(db, "tasks", taskId);
+  return updateDoc(taskRef, {
+    title: data.title,
+    description: data.description,
   });
 }
 
