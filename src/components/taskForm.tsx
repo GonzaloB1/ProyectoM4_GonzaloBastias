@@ -30,9 +30,10 @@ export function TaskForm() {
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
-      <button type="submit" disabled={loading || !title.trim()}>
-        Agregar
+      <button className="btn-primary" type="submit" disabled={loading || !title.trim()}>
+      Agregar
       </button>
+      
     </form>
   );
 }

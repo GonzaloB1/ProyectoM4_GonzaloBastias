@@ -10,7 +10,7 @@ export function LogoutButton() {
   }
 
   return (
-    <button onClick={handleLogout}>
+    <button className="btn-secondary" onClick={handleLogout}>
       Cerrar sesión
     </button>
   );

@@ -5,6 +5,7 @@ import { TaskList } from "../components/TaskList";
 import { useAuth } from "../features/auth/useAuth";
 import { useTasks } from "../hooks/useTasks";
 import { sendTaskSummary } from "../services/emailService";
+import "./Tasks.css";
 
 export function Tasks() {
   const { user } = useAuth();
@@ -29,19 +30,39 @@ export function Tasks() {
   }
 
   return (
-    <div>
-      <h1>Mis tareas</h1>
-      <p>Sesión activa: {user?.email}</p>
-      <LogoutButton />
+    <div className="tasks-page">
+      <div className="tasks-topbar">
+        <div>
+          <p className="brand-name">MateCode</p>
+          <div className="user-info">
+            <p>Sesión activa: {user?.email}</p>
+          </div>
+        </div>
+        <LogoutButton />
+      </div>
 
-      <TaskForm />
+      <div className="tasks-grid">
+        <div className="card card-form">
+          <h2>Nueva tarea</h2>
+          <TaskForm />
+        </div>
 
-      {loading ? <p>Cargando tareas...</p> : <TaskList tasks={tasks} />}
+        <div className="card card-list">
+          <h2>Mis tareas</h2>
+          {loading ? <p className="empty-state">Cargando tareas...</p> : <TaskList tasks={tasks} />}
 
-      <button onClick={handleSendSummary} disabled={sendingEmail || tasks.length === 0}>
-        {sendingEmail ? "Enviando..." : "Enviar resumen por email"}
-      </button>
-      {emailStatus && <p>{emailStatus}</p>}
+          <div className="email-card" style={{ marginTop: "1.5rem", paddingTop: "1.25rem", borderTop: "1px solid var(--color-border)" }}>
+            <div>
+              <p style={{ fontWeight: 600, marginBottom: "0.2rem", color: "var(--color-text)" }}>Resumen por email</p>
+              <p>Recibí un resumen de tus tareas en tu correo.</p>
+            </div>
+            <button className="btn-secondary" onClick={handleSendSummary} disabled={sendingEmail || tasks.length === 0}>
+              {sendingEmail ? "Enviando..." : "Enviar resumen"}
+            </button>
+          </div>
+          {emailStatus && <p className="email-status">{emailStatus}</p>}
+        </div>
+      </div>
     </div>
   );
 }

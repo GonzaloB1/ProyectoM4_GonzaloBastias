@@ -33,35 +33,54 @@ export function Login() {
 
   return (
     <div className="auth-page">
-      <form className="auth-form" onSubmit={handleSubmit}>
-        <h1>Iniciar sesión</h1>
+      <div className="auth-container">
+        <div className="auth-brand">
+          <p className="brand-name">MateCode</p>
+          <h2>
+            Tus tareas, <span className="highlight">en un solo lugar.</span>
+          </h2>
+          <p>Organizá tus tareas y mantené el foco sin distracciones.</p>
+        </div>
 
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+        <form className="auth-form" onSubmit={handleSubmit}>
+          <h1>Iniciar sesión</h1>
+          <p className="subtitle">Ingresá a tu cuenta para ver tus tareas.</p>
 
-        <input
-          type="password"
-          placeholder="Contraseña"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+          <div className="field-group">
+            <label htmlFor="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              placeholder="tu@email.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
 
-        {error && <p className="error">{error}</p>}
+          <div className="field-group">
+            <label htmlFor="password">Contraseña</label>
+            <input
+              id="password"
+              type="password"
+              placeholder="Tu contraseña"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
 
-        <button type="submit" disabled={loading}>
-          {loading ? "Ingresando..." : "Iniciar sesión"}
-        </button>
+          {error && <p className="error">{error}</p>}
 
-        <p className="switch-link">
-          ¿No tenés cuenta? <Link to="/register">Registrate</Link>
-        </p>
-      </form>
+          <button type="submit" disabled={loading}>
+            {loading ? "Ingresando..." : "Iniciar sesión"}
+          </button>
+
+          <p className="switch-link">
+            ¿No tenés cuenta? <Link to="/register">Crear cuenta</Link>
+          </p>
+        </form>
+      </div>
     </div>
   );
 }
