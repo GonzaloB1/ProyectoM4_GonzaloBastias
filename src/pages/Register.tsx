@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { registerUser } from "../services/authService";
 import { getAuthErrorMessage } from "../utils/authErrors";
 import { FirebaseError } from "firebase/app";
+import "./AuthForm.css";
 
 export function Register() {
   const [email, setEmail] = useState("");
@@ -36,34 +37,36 @@ export function Register() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h1>Registrarse</h1>
+    <div className="auth-page">
+      <form className="auth-form" onSubmit={handleSubmit}>
+        <h1>Registrarse</h1>
 
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-      />
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
 
-      <input
-        type="password"
-        placeholder="Contraseña"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        required
-      />
+        <input
+          type="password"
+          placeholder="Contraseña"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
 
-      {error && <p className="error">{error}</p>}
+        {error && <p className="error">{error}</p>}
 
-      <button type="submit" disabled={loading}>
-        {loading ? "Registrando..." : "Registrarse"}
-      </button>
+        <button type="submit" disabled={loading}>
+          {loading ? "Registrando..." : "Registrarse"}
+        </button>
 
-      <p>
-        ¿Ya tenés cuenta? <Link to="/login">Iniciar sesión</Link>
-      </p>
-    </form>
+        <p className="switch-link">
+          ¿Ya tenés cuenta? <Link to="/login">Iniciar sesión</Link>
+        </p>
+      </form>
+    </div>
   );
 }

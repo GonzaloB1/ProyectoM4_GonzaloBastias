@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { loginUser } from "../services/authService";
 import { getAuthErrorMessage } from "../utils/authErrors";
 import { FirebaseError } from "firebase/app";
+import "./AuthForm.css";
 
 export function Login() {
   const [email, setEmail] = useState("");
@@ -31,34 +32,36 @@ export function Login() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h1>Iniciar sesión</h1>
+    <div className="auth-page">
+      <form className="auth-form" onSubmit={handleSubmit}>
+        <h1>Iniciar sesión</h1>
 
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-      />
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
 
-      <input
-        type="password"
-        placeholder="Contraseña"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        required
-      />
+        <input
+          type="password"
+          placeholder="Contraseña"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
 
-      {error && <p className="error">{error}</p>}
+        {error && <p className="error">{error}</p>}
 
-      <button type="submit" disabled={loading}>
-        {loading ? "Ingresando..." : "Iniciar sesión"}
-      </button>
+        <button type="submit" disabled={loading}>
+          {loading ? "Ingresando..." : "Iniciar sesión"}
+        </button>
 
-      <p>
-        ¿No tenés cuenta? <Link to="/register">Registrate</Link>
-      </p>
-    </form>
+        <p className="switch-link">
+          ¿No tenés cuenta? <Link to="/register">Registrate</Link>
+        </p>
+      </form>
+    </div>
   );
 }
